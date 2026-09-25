@@ -1,0 +1,32 @@
+cff-version: 1.2.0
+title: "autolearnR"
+message: "If you use this software, please cite it as below."
+type: software
+
+authors:
+  - family-names: Cardoso Garcia
+    given-names: Luiz Fernando
+    affiliation: Universidade Federal do Paraná
+    orcid: "https://orcid.org/0000-0002-9616-0927"
+
+abstract: >
+  autolearnR provides automated diagnostic checks for datasets, including
+  detection of variable types, class balance, normality, missing values,
+  and zero-variance features. Based on these diagnostics, the package
+  suggests appropriate machine learning models for classification,
+  regression, or clustering tasks. Designed for simplicity and reproducibility.
+
+keywords:
+  - machine learning
+  - omics
+  - bioinformatics
+  - clinical data
+  - R
+
+version: "0.0.2"
+date-released: 2026-06-26
+
+repository-code: "https://github.com/Luiz-Garcia-R/autolearnR"
+url: "https://github.com/Luiz-Garcia-R/autolearn"
+
+license: "MIT"

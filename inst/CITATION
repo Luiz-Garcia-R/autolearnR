@@ -1,0 +1,13 @@
+citHeader("To cite autolearnR:")
+
+bibentry(
+  bibtype = "Manual",
+  title   = "autolearnR: Automated Dataset Diagnostics and Learning Model Suggestions",
+  author  = person(
+    "Luiz Fernando", "Cardoso Garcia",
+    comment = "Universidade Federal do Paraná"
+  ),
+  year    = "2026",
+  note    = "R package version 0.0.2",
+  url     = "https://github.com/Luiz-Garcia-R/autolearnR"
+)
