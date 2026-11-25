@@ -1,14 +1,26 @@
 # autolearnR
 
-<!-- badges: start -->
+<!-- badges: start --> <!-- badges: end -->
 
-<!-- badges: end -->
+<table>
+<tr>
+<td width="70%" valign="top">
 
-+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+-------------------------------------------------------------------------------------------+
-|                                                                                                                                                                                                                                                                                                                                                                      |                                                                                           |
-+======================================================================================================================================================================================================================================================================================================================================================================+===========================================================================================+
-| \*\*Machine learning for biological data, from design to independent validation.\*\* autolearnR is an R package designed to streamline supervised machine learning workflows, with a focus on classification tasks. It provides tools for dataset diagnostics, model training, performance evaluation, algorithm comparison, and prediction in independent datasets. | ![autolearnR package logo](man/figures/logo_autolearn.png){alt="autolearnR package logo"} |
-+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+-------------------------------------------------------------------------------------------+
+**Machine learning for biological data, from design to independent validation.**
+
+autolearnR is an R package designed to streamline supervised machine learning workflows, with a focus on classification tasks.
+
+It provides tools for dataset diagnostics, model training, performance evaluation, algorithm comparison, and prediction in independent datasets.
+
+</td>
+
+<td width="30%" align="center" valign="middle">
+
+<img src="man/figures/logo_autolearnR.png" alt="autolearnR package logo" width="160">
+
+</td>
+</tr>
+</table>
 
 ## Installation
 
