@@ -1,24 +1,39 @@
 Package: autolearnR
-Title: Automated Dataset Diagnostics and Learning Model Suggestions
-Version: 0.0.1
-Authors@R: 
-    person("Luiz", "Garcia", 
-           email = "luiz.cardoso@ufpr.br", 
+Type: Package
+Title: Machine Learning Workflows for Biological Data
+Version: 0.2.0
+Authors@R:
+    person("Luiz", "Garcia",
+           email = "luiz.cardoso@ufpr.br",
            role = c("aut", "cre"),
-           comment = c(ORCID = "0000-0002-9616-0927", affiliation = "UFPR"))
-Description: Provides automated diagnostic checks for datasets, including
-    detection of variable types, class balance, normality, missing values,
-    and zero-variance features. Based on these diagnostics, the package
-    suggests appropriate machine learning models for classification,
-    regression, or clustering tasks. Designed for simplicity and reproducibility.
+           comment = c(ORCID = "0000-0002-9616-0927"))
+Description: Provides tools for supervised machine learning workflows,
+    with a focus on classification tasks in biological datasets.
+    Includes dataset diagnostics, classification model training,
+    performance evaluation, model comparison, and prediction in
+    independent datasets. Supports Logistic Regression, Elastic Net,
+    Decision Trees, Random Forest, and Support Vector Machines.
+    Designed to promote reproducible model development and evaluation.
 License: MIT + file LICENSE
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.3.2
+Depends:
+    R (>= 4.1.0)
 Imports:
-    crayon,
+    caret,
     dplyr,
+    e1071,
+    ggplot2,
+    glmnet,
+    patchwork,
+    pROC,
+    randomForest,
+    rlang,
+    rpart,
     stats,
     utils
-Depends: 
-    R (>= 3.5)
+Suggests:
+    crayon,
+    rpart.plot
+NeedsCompilation: no
+Config/roxygen2/version: 8.1.1

@@ -1,3 +1,44 @@
-^autolearnR\.Rproj$
+# -------------------------------
+# R Package Build Ignore
+# -------------------------------
+
+# RStudio project files
+\.Rproj$
+^\.Rproj\.user$
+
+# Version control / Git
+^\\.git$
+^\\.gitignore$
+^\.github$
+
+# Documentation / Markdown / Notes
+^README\\.md$
+^LICENSE\\.md$
+^NEWS\\.md$
+^docs/
+^CITATION\.cff$
+
+# Cache / temporary / output
+^\\.Rhistory$
+^\\.RData$
+^\\.Ruserdata$
+^\\.Rplots\\.pdf$
+^\\.Rproj\\.user/
+^__pycache__/
+^.*\\.tmp$
+^.*\\.log$
+
+# OS-specific
+^\\.DS_Store$
+^Thumbs\\.db$
 ^\.Rproj\.user$
 ^LICENSE\.md$
+^\.*\\.Rproj$$
+
+
+^doc$
+^Meta$
+^_pkgdown\.yml$
+^docs$
+^pkgdown$
+

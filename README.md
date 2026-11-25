@@ -1,91 +1,128 @@
 # autolearnR
 
 <!-- badges: start -->
+
 <!-- badges: end -->
 
-autolearnR is an R package designed to provide an automated first-pass evaluation of your dataset to suggest the most appropriate machine learning or clustering method.
-It inspects data structure, balance, normality, and feature characteristics, returning a clear recommendation for the main algorithm and alternatives.
-
-*Note:* The current version (0.0.1) includes only the pre.learn() function. Later versions will add full model training and evaluation workflows.
++----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+-------------------------------------------------------------------------------------------+
+|                                                                                                                                                                                                                                                                                                                                                                      |                                                                                           |
++======================================================================================================================================================================================================================================================================================================================================================================+===========================================================================================+
+| \*\*Machine learning for biological data, from design to independent validation.\*\* autolearnR is an R package designed to streamline supervised machine learning workflows, with a focus on classification tasks. It provides tools for dataset diagnostics, model training, performance evaluation, algorithm comparison, and prediction in independent datasets. | ![autolearnR package logo](man/figures/logo_autolearn.png){alt="autolearnR package logo"} |
++----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+-------------------------------------------------------------------------------------------+
 
 ## Installation
 
 You can install the development version directly from GitHub:
 
 ``` r
-# Install devtools if you haven't already
-install.packages("devtools")
-
-# Install autolearnR from GitHub
-devtools::install_github("Luiz-Garcia-R/autolearnR")
+install.packages("remotes")
+remotes::install_github("Luiz-Garcia-R/autolearnR")
 ```
 
-## Input Data Format (Very Important)
+## Getting started
 
-To use pre.learn(), you need two input data frames:
+The recommended workflow consists of four steps:
 
-  1. raw_data – features or predictors
-    - Must contain a first column called Sample
-    - Other columns must contain numeric or categorical data
+1.  **Design:** Explore dataset characteristics and obtain model recommendations using `learn_design()`.
+2.  **Train:** Fit classification algorithms using the `learn_*()` functions.
+3.  **Compare:** Evaluate and compare trained models using `learn_compare()`.
+4.  **Validate:** Apply frozen models to independent datasets using `learn_predict()`.
 
-Example of raw_data:
+## Input Data Format
 
-| Sample | Var1 | Var2 | Var3 |
-| ------ | ---- | ---- | ---- |
-| S1     | 5.1  | 10.2 | A    |
-| S2     | 4.8  | 9.5  | B    |
-| S3     | 5.5  | 10.0 | A    |
-| S4     | 5.0  | 10.3 | B    |
+autolearnR uses a single data frame containing the target variable and candidate predictors.
 
+- Each row represents one sample.
+- Each column represents a predictor or the target variable.
+- An optional sample identifier column can be supplied through `sample_col`.
+- The target variable must be a factor, character, or logical vector with at least two observed classes.
 
-  2. metadata – describes your samples and experimental groups
-    Must contain at least two columns:
-    - Sample: matches exactly the first column of raw_data
-    - Output: target variable for supervised learning
+Example:
 
-Example of metadata:
+| Sample | Group   | Age | Biomarker_A | Biomarker_B |
+|--------|---------|-----|-------------|-------------|
+| S1     | Control | 35  | 2.5         | 10.2        |
+| S2     | Control | 42  | 3.1         | 9.5         |
+| S3     | Case    | 51  | 5.5         | 15.0        |
+| S4     | Case    | 47  | 6.0         | 13.3        |
 
-| Sample | Group   | Output  |
-| ------ | ------- | ------- |
-| S1     | Control | Control |
-| S2     | Control | Control |
-| S3     | Case    | Case    |
-| S4     | Case    | Case    |
+**Note:** Missing values are diagnosed but are not automatically removed or imputed during model training.
 
+## Main Functions
 
-## Main Function
+### Dataset design
 
-pre.learn()
+`learn_design()` – Evaluates dataset characteristics, identifies potential issues, and recommends classification algorithms.
 
-The pre.learn() function provides:
-  - Automatic detection of task type: classification, regression, or clustering
-  - Checks for class balance, normality of numeric variables, presence of categorical features
-  - Column-level diagnostics: counts of missing values (NAs) and zero-variance features
-  - Heuristic recommendations for the most suitable main and alternative algorithms
+### Classification algorithms
 
-Example
+| Function                | Algorithm              |
+|-------------------------|------------------------|
+| `learn_logistic()`      | Logistic Regression    |
+| `learn_elastic_net()`   | Elastic Net            |
+| `learn_tree()`          | Decision Tree          |
+| `learn_random_forest()` | Random Forest          |
+| `learn_svm()`           | Support Vector Machine |
+
+### Model evaluation
+
+- `learn_compare()` – Combines and compares the performance of multiple trained models.
+- `learn_predict()` – Applies frozen models to independent datasets and evaluates predictive generalization when reference labels are available.
+
+## Minimal Example
 
 ``` r
 library(autolearnR)
 
-# Run pre-learn analysis
-result <- pre.learn(raw_data, metadata)
+# Dataset diagnostics
+design <- learn_design(
+  data = learn_data,
+  target_var = "Group",
+  sample_col = "Sample"
+)
+
+# Train classification models
+result_logistic <- learn_logistic(
+  data = learn_data,
+  target_var = "Group",
+  sample_col = "Sample",
+  seed = 123
+)
+
+result_elastic <- learn_elastic_net(
+  data = learn_data,
+  target_var = "Group",
+  sample_col = "Sample",
+  seed = 123
+)
+
+# Compare models
+comparison <- learn_compare(
+  results = list(
+    logistic = result_logistic,
+    elastic_net = result_elastic
+  ),
+  plot = TRUE
+)
+
+# Predict in an independent dataset
+external_result <- learn_predict(
+  model = result_logistic$frozen_model,
+  new_data = validation_data
+)
 ```
 
-Output:
-  - Suggested main algorithm (e.g., Random Forest, Logistic Regression, k-means)
-  - Suggested alternative algorithms
-  - Reasoning behind suggestions
-  - Diagnostic summary of your data
+## Important Considerations
 
-``` r
-result$suggested_main          # Main algorithm
-result$suggested_alternatives  # Alternative algorithms
-result$diagnostic              # Balance, normality, NAs, zero-variance columns
-```
+- **Classification only:** The current implementation supports supervised classification tasks.
+- **Missing values:** Training functions require missing values to be handled before model fitting.
+- **Model comparison:** Models should be evaluated using compatible test observations and class definitions.
+- **Independent validation:** External evaluation provides evidence of generalization beyond the original test dataset.
 
 ## Contact
 
-For questions, suggestions, or contributions, open an issue or pull request on GitHub.
+For questions, suggestions, bug reports, or contributions, open an issue or pull request on GitHub:
+
+<https://github.com/Luiz-Garcia-R/autolearnR>
 
 Thank you for using autolearnR!

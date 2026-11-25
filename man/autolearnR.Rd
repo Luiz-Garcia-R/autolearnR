@@ -4,59 +4,86 @@
 \name{autolearnR}
 \alias{autolearnR-package}
 \alias{autolearnR}
-\title{autolearnR: Quick Reference and Main Function for Automated Learning Suggestions}
+\title{autolearnR: Machine Learning for Biological Data}
 \description{
-autolearnR provides an automated first-pass evaluation of datasets to guide
-users in selecting the most suitable machine learning or clustering approach.
-Currently, it includes the \code{pre.learn()} function to inspect your data and
-provide a heuristic recommendation for main and alternative algorithms.
+autolearnR provides tools for supervised machine learning workflows,
+with a focus on classification tasks in biological datasets.
+The package supports dataset diagnostics, model training,
+performance evaluation, model comparison, and prediction
+in independent datasets.
 }
 \details{
 \subsection{Main Workflow}{
 
-The recommended workflow guides users from raw data and metadata inspection
-to algorithm suggestions:
+The package provides four complementary steps:
 \itemize{
-\item pre.learn() – Automatically evaluate data structure, balance, normality,
-missing values, and zero-variance features to suggest the best algorithm.
+\item \code{learn_design()} - Evaluates dataset characteristics, identifies
+potential issues, and provides heuristic model recommendations.
+\item \verb{learn_*()} - Trains classification models using Logistic Regression,
+Elastic Net, Decision Trees, Random Forest, or Support Vector Machines.
+\item \code{learn_compare()} - Combines and compares the performance of
+multiple trained models.
+\item \code{learn_predict()} - Applies frozen models to independent datasets
+to evaluate predictive generalization.
+}
 }
 
-Main Function Overview\tabular{ll}{
-   Function \tab Description \cr
-   \code{pre.learn()} \tab Automatic first-pass data evaluation and algorithm suggestion \cr
+\subsection{Available Algorithms}{\tabular{ll}{
+   Function \tab Algorithm \cr
+   \code{learn_logistic()} \tab Logistic Regression \cr
+   \code{learn_elastic_net()} \tab Elastic Net \cr
+   \code{learn_tree()} \tab Decision Tree \cr
+   \code{learn_random_forest()} \tab Random Forest \cr
+   \code{learn_svm()} \tab Support Vector Machine \cr
 }
 
+}
 
-Contact and Contributions
-For suggestions, bug reports, or contributions, see the
-\href{https://github.com/Luiz-Garcia-R/autolearnR}{GitHub repository}.
+\subsection{Important Notes}{
+\itemize{
+\item The current implementation supports supervised classification.
+\item Missing values are diagnosed but are not automatically removed
+or imputed during model training.
+\item Model recommendations are heuristic and should not replace
+statistical judgment or independent validation.
+}
 
-Example Workflow
-
-A small synthetic dataset to demonstrate \code{pre.learn()} usage.
+For installation instructions, examples, and further details,
+visit the package repository:
+\href{https://github.com/Luiz-Garcia-R/autolearnR}{GitHub}.
 }
 }
 \examples{
-
-# Example raw data
-raw_data <- data.frame(
-  Sample = paste0("S", 1:6),
-  Var1 = c(5.1, 4.8, 5.5, 5.0, 5.2, 4.9),
-  Var2 = c(10.2, 9.5, 10.0, 10.3, 9.8, 10.1),
-  Var3 = c("A","B","A","B","A","B")
+\dontrun{
+# Explore dataset characteristics
+design <- learn_design(
+  data = my_data,
+  target_var = "Group",
+  sample_col = "Sample"
 )
 
-# Example metadata
-metadata <- data.frame(
-  Sample = raw_data$Sample,
-  Output = c("Control","Control","Control","Case","Case","Case")
+# Train a classification model
+result <- learn_random_forest(
+  data = my_data,
+  target_var = "Group",
+  sample_col = "Sample"
 )
 
-# Run pre-learn analysis
-pre.learn(raw_data, metadata)
+# Apply the frozen model to an independent dataset
+external_result <- learn_predict(
+  model = result$frozen_model,
+  new_data = validation_data
+)
+}
 
 }
 \author{
-\strong{Maintainer}: Luiz Garcia \email{luiz.cardoso@ufpr.br} (\href{https://orcid.org/0000-0002-9616-0927}{ORCID}) (UFPR)
+\strong{Maintainer}: Luiz Garcia \email{luiz.cardoso@ufpr.br} (\href{https://orcid.org/0000-0002-9616-0927}{ORCID})
+
+Authors:
+\itemize{
+  \item Luiz Garcia \email{luiz.cardoso@ufpr.br} (\href{https://orcid.org/0000-0002-9616-0927}{ORCID})
+}
 
 }
+\keyword{package}
