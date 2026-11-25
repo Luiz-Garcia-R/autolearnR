@@ -1,7 +1,7 @@
 Package: autolearnR
 Type: Package
 Title: Machine Learning Workflows for Biological Data
-Version: 0.2.0
+Version: 0.1.0
 Authors@R:
     person("Luiz", "Garcia",
            email = "luiz.cardoso@ufpr.br",
